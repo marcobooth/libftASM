@@ -1,33 +1,42 @@
 ;******************************************************************************;
 ;                                                                              ;
 ;                                                         :::      ::::::::    ;
-;    ft_bzero.s                                         :+:      :+:    :+:    ;
+;    ft_isalpha.s                                       :+:      :+:    :+:    ;
 ;                                                     +:+ +:+         +:+      ;
 ;    By: mbooth <mbooth@student.42.fr>              +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
-;    Created: 2015/04/02 16:06:29 by mbooth            #+#    #+#              ;
-;    Updated: 2015/04/03 16:48:36 by mbooth           ###   ########.fr        ;
+;    Created: 2015/04/03 16:51:12 by mbooth            #+#    #+#              ;
+;    Updated: 2015/04/03 17:12:48 by mbooth           ###   ########.fr        ;
 ;                                                                              ;
 ;******************************************************************************;
 
 section .text
-	global _ft_bzero
+	global _ft_isalpha
 
-_ft_bzero:
+_ft_isalpha:
 	enter 0, 0
-	cmp   rsi, 0
-	jz    exit
-	mov   rax, rsi
-	mov   rbx, rdi
+	mov	rax, 0
+	mov rbx, rdi
+	cmp rbx, 90
+	jle is_capital
+	cmp rbx, 97
+	jge is_lower
+	jmp exit
 
-ft_bzero_loop:
-	cmp   rax, 0
-	jz    exit
-	mov   [rbx], byte 0
-	inc   rbx
-	dec   rax
-	jmp   ft_bzero_loop
+is_capital:	
+	cmp rbx, 65
+	jge true
+	jmp exit
 
+is_lower:	
+	cmp rbx, 122
+	jle true
+	jmp exit
+	
+true:
+	mov rax, 1
+	jmp exit
+	
 exit:
 	leave
 	ret

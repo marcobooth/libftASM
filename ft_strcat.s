@@ -1,33 +1,38 @@
 ;******************************************************************************;
 ;                                                                              ;
 ;                                                         :::      ::::::::    ;
-;    ft_bzero.s                                         :+:      :+:    :+:    ;
+;    ft_strcat.s                                        :+:      :+:    :+:    ;
 ;                                                     +:+ +:+         +:+      ;
 ;    By: mbooth <mbooth@student.42.fr>              +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
-;    Created: 2015/04/02 16:06:29 by mbooth            #+#    #+#              ;
-;    Updated: 2015/04/03 16:48:36 by mbooth           ###   ########.fr        ;
+;    Created: 2015/04/03 17:24:01 by mbooth            #+#    #+#              ;
+;    Updated: 2015/04/03 18:19:28 by mbooth           ###   ########.fr        ;
 ;                                                                              ;
 ;******************************************************************************;
 
 section .text
-	global _ft_bzero
+	global _ft_strcat
 
-_ft_bzero:
+_ft_strcat:
 	enter 0, 0
-	cmp   rsi, 0
-	jz    exit
-	mov   rax, rsi
-	mov   rbx, rdi
+	mov rax, rdi				;move address of s1 (rdi) to return register (rax)	
 
-ft_bzero_loop:
-	cmp   rax, 0
-	jz    exit
-	mov   [rbx], byte 0
-	inc   rbx
-	dec   rax
-	jmp   ft_bzero_loop
+find_end_s1:
+	cmp [rax], byte 0		;if rax[r11] == '\0'
+	je  add_second_str 			;jump to add second string to s1
+	inc rax
+	jmp find_end_s1
+
+add_second_str:
+	cmp [rsi], byte 0
+	je  exit
+	mov rbx, [rsi]
+	mov [rax], rbx
+	inc rax
+	inc rsi
+	jmp add_second_str
 
 exit:
+	mov rax, rdi
 	leave
 	ret
