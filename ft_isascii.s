@@ -6,7 +6,7 @@
 ;    By: tsilva <tsilva@student.42.fr>              +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2015/04/04 10:54:27 by tsilva            #+#    #+#              ;
-;    Updated: 2015/04/04 11:07:25 by tsilva           ###   ########.fr        ;
+;    Updated: 2015/04/04 11:51:05 by mbooth           ###   ########.fr        ;
 ;                                                                              ;
 ;******************************************************************************;
 
@@ -15,7 +15,7 @@ section .data
 	ASCII_DEL equ 127
 	
 section .text
-	global _ftisascii
+	global _ft_isascii
 
 _ft_isascii:
 	mov rax, 0
