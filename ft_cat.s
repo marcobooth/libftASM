@@ -6,7 +6,7 @@
 ;    By: tsilva <tsilva@student.42.fr>              +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2015/04/05 16:13:19 by tsilva            #+#    #+#              ;
-;    Updated: 2015/04/05 17:25:59 by mbooth           ###   ########.fr        ;
+;    Updated: 2015/04/05 19:53:04 by mbooth           ###   ########.fr        ;
 ;                                                                              ;
 ;******************************************************************************;
 
@@ -24,6 +24,8 @@ section .text
 	global _ft_cat
 
 _ft_cat:
+	cmp rdi, 0
+	jl invalid_fd
 	push rdi					;storing fd	
 
 read:
@@ -42,6 +44,10 @@ display:
 	syscall						;write(fd, buf[full], ret)
 	jmp read
 
+invalid_fd:
+	mov rdi, 1
+	mov rax, MACHSYSCALL(EXIT)
+	
 error:
 	mov rax, 1
 	
