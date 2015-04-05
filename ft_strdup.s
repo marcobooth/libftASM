@@ -1,37 +1,41 @@
 ;******************************************************************************;
 ;                                                                              ;
 ;                                                         :::      ::::::::    ;
-;    ft_strcat.s                                        :+:      :+:    :+:    ;
+;    ft_strdup.s                                        :+:      :+:    :+:    ;
 ;                                                     +:+ +:+         +:+      ;
 ;    By: mbooth <mbooth@student.42.fr>              +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
-;    Created: 2015/04/03 17:24:01 by mbooth            #+#    #+#              ;
-;    Updated: 2015/04/05 12:55:57 by mbooth           ###   ########.fr        ;
+;    Created: 2015/04/05 10:53:36 by mbooth            #+#    #+#              ;
+;    Updated: 2015/04/05 11:47:04 by mbooth           ###   ########.fr        ;
 ;                                                                              ;
 ;******************************************************************************;
 
 section .text
-	global _ft_strcat
-	extern _ft_memcpy
+	global _ft_strdup	
 	extern _ft_strlen
+	extern _malloc
+	extern _ft_memcpy
 
-_ft_strcat:
-	push rdi
-	mov rcx, -1
-	mov rax, 0x0
-	repne scasb
-	dec rdi
-	push rdi					;end of s1
-
-strlen_s2:
-	mov  rdi, rsi
+_ft_strdup:
+	mov r12, rdi				;address of initial string
+	mov rax, 0					
 	call _ft_strlen
-	mov rdx, rax
-	
-copy_second_string:
-	pop rdi
-	call _ft_memcpy
-	pop rax
+	inc rax						;increment for /0
 
+prepare_malloc:
+	mov rdi, rax
+	push rdi					;result from strlen
+	call _malloc
+	pop rdx						;result from strlen
+	
+prepare_memcpy:
+	mov rsi, r12				;address of initial string
+	mov rdi, rax				;malloced string to 1st arg
+	call _ft_memcpy			
+
+	;; \0???
+	
 exit:
 	ret
+	
+	

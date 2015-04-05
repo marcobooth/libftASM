@@ -1,37 +1,21 @@
 ;******************************************************************************;
 ;                                                                              ;
 ;                                                         :::      ::::::::    ;
-;    ft_strcat.s                                        :+:      :+:    :+:    ;
+;    ft_memcpy.s                                        :+:      :+:    :+:    ;
 ;                                                     +:+ +:+         +:+      ;
 ;    By: mbooth <mbooth@student.42.fr>              +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
-;    Created: 2015/04/03 17:24:01 by mbooth            #+#    #+#              ;
-;    Updated: 2015/04/05 12:55:57 by mbooth           ###   ########.fr        ;
+;    Created: 2015/04/04 19:34:07 by mbooth            #+#    #+#              ;
+;    Updated: 2015/04/05 10:51:27 by mbooth           ###   ########.fr        ;
 ;                                                                              ;
 ;******************************************************************************;
 
 section .text
-	global _ft_strcat
-	extern _ft_memcpy
-	extern _ft_strlen
+	global _ft_memcpy
 
-_ft_strcat:
-	push rdi
-	mov rcx, -1
-	mov rax, 0x0
-	repne scasb
-	dec rdi
-	push rdi					;end of s1
-
-strlen_s2:
-	mov  rdi, rsi
-	call _ft_strlen
-	mov rdx, rax
-	
-copy_second_string:
-	pop rdi
-	call _ft_memcpy
-	pop rax
-
-exit:
+_ft_memcpy:
+	push rdi					;initial address
+	mov rcx, rdx				;rdx - size to be copied
+	rep movsb					;from rsi to rdi
+	pop rax						;initial address
 	ret

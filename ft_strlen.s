@@ -1,37 +1,31 @@
 ;******************************************************************************;
 ;                                                                              ;
 ;                                                         :::      ::::::::    ;
-;    ft_strcat.s                                        :+:      :+:    :+:    ;
+;    ft_strlen.s                                        :+:      :+:    :+:    ;
 ;                                                     +:+ +:+         +:+      ;
 ;    By: mbooth <mbooth@student.42.fr>              +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
-;    Created: 2015/04/03 17:24:01 by mbooth            #+#    #+#              ;
-;    Updated: 2015/04/05 12:55:57 by mbooth           ###   ########.fr        ;
+;    Created: 2015/04/04 16:46:03 by mbooth            #+#    #+#              ;
+;    Updated: 2015/04/04 18:51:40 by mbooth           ###   ########.fr        ;
 ;                                                                              ;
 ;******************************************************************************;
 
 section .text
-	global _ft_strcat
-	extern _ft_memcpy
-	extern _ft_strlen
+	global _ft_strlen
 
-_ft_strcat:
-	push rdi
+_ft_strlen:
 	mov rcx, -1
 	mov rax, 0x0
+	cmp rdi, rax
+	je ifnull
 	repne scasb
-	dec rdi
-	push rdi					;end of s1
+	mov rax, -2
+	sub rax, rcx
+	jmp exit
 
-strlen_s2:
-	mov  rdi, rsi
-	call _ft_strlen
-	mov rdx, rax
+ifnull:
+	mov rax, 0
+	jmp exit
 	
-copy_second_string:
-	pop rdi
-	call _ft_memcpy
-	pop rax
-
-exit:
+exit:	
 	ret
