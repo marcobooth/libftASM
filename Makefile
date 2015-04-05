@@ -6,7 +6,7 @@
 #    By: mbooth <mbooth@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/02/24 17:06:05 by mbooth            #+#    #+#              #
-#    Updated: 2015/04/05 11:00:24 by mbooth           ###   ########.fr        #
+#    Updated: 2015/04/05 16:16:28 by mbooth           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC_LIB =		ft_bzero.s	 \
 				ft_memcpy.s \
 				ft_memset.s \
 				ft_strdup.s \
+				ft_cat.s \
 
 $(NAME):	$(OBJ_LIB)
 	@ar -rc $(NAME) $(OBJ_LIB)

@@ -6,7 +6,7 @@
 ;    By: mbooth <mbooth@student.42.fr>              +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2015/04/04 12:00:25 by mbooth            #+#    #+#              ;
-;    Updated: 2015/04/04 16:04:16 by mbooth           ###   ########.fr        ;
+;    Updated: 2015/04/05 18:56:38 by mbooth           ###   ########.fr        ;
 ;                                                                              ;
 ;******************************************************************************;
 
@@ -14,17 +14,19 @@
 	
 section .data
 	WRITE equ 4
-	msg db 0xa
 	STD_OUT equ 1
-	
+	string db "(null)", 10
+
 section .text
 	global _ft_puts
-
+	
 _ft_puts:
 	push rdi
 	mov rsi, rdi
 	mov rdi, STD_OUT
 	mov rdx, 0
+	cmp rsi, 0
+	je print_null
 
 find_end_s1:
 	cmp [rsi], byte 0
@@ -39,11 +41,21 @@ write:
 	syscall
 
 printNewLine:
-    lea rsi, [rel msg]
+    lea rsi, [rel string + 6]
 	mov rdx, 1
+	mov rdi, STD_OUT
 	mov rax, MACHSYSCALL(WRITE)	
 	syscall
 	mov rax, 1
+	jmp exit
 
+print_null:
+	lea rsi, [rel string]
+	mov rdx, 7
+	mov rax, MACHSYSCALL(WRITE)
+	syscall
+	mov rax, 10
+	pop rsi
+	
 exit:	
 	ret
